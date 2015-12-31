@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/branco">
+
+        <LinearLayout
+            android:id="@+id/cabecalho"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/padding_detail_left"
+            android:paddingRight="@dimen/padding_default"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tarefa"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/criar_tarefa"
+                android:textColor="@color/branco" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_below="@+id/cabecalho"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp" />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/fabPronto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/ic_action_done"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorPrimaryPressed"
+            fab:fab_colorRipple="@color/colorAccent" />
+
+        <LinearLayout
+            android:id="@+id/lnlDataVencimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fabPronto"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_default"
+            android:paddingTop="@dimen/padding_default">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_today" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_default"
+                android:paddingRight="@dimen/padding_default">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/data_vencimento"
+                    android:textColor="@color/primaryText" />
+
+                <Button
+                    android:id="@+id/btnDataVencimento"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:hint="@string/selecionar_data"
+                    android:textColor="@color/secondaryText"
+                    android:textColorHint="@color/secondaryText"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnlPrioridade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lnlDataVencimento"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_default"
+            android:paddingTop="@dimen/padding_default">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_prioridade" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_default"
+                android:paddingRight="@dimen/padding_default">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prioridade"
+                    android:textColor="@color/primaryText" />
+
+                <Spinner
+                    android:id="@+id/spnPrioridade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:popupBackground="@color/branco"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lnlPrioridade"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_default"
+            android:paddingTop="@dimen/padding_default">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_comment" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_default"
+                android:paddingRight="@dimen/padding_default">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/obs"
+                    android:textColor="@color/primaryText" />
+
+                <EditText
+                    android:id="@+id/edtObs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sem_comentario"
+                    android:textColor="@color/secondaryText"
+                    android:textColorHint="@color/secondaryText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

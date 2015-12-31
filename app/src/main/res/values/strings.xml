@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Lista Tarefas</string>
+    <string name="titulo_activity_main">Tarefas</string>
+    <string name="configuracao">Configuração</string>
+    <string name="titulo_activity_tarefa">Tarefa</string>
+    <string name="data_vencimento">Data Vencimento</string>
+    <string name="criar_tarefa">Criar uma tarefa</string>
+    <string name="tarefa">Tarefa</string>
+    <string name="lista">Lista</string>
+    <string name="prioridade">Prioridade</string>
+    <string name="obs">Obs.</string>
+    <string name="sem_comentario">Sem Comentário</string>
+    <string name="selecionar_data">Selecione a Data</string>
+    <string name="lista_vazia">Nenhuma Tarefa Adicionada</string>
+
+    <string-array name="prioridade">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="corPrioridade">
+        <item>@color/verde</item>
+        <item>@color/roxo</item>
+        <item>@color/azul</item>
+        <item>@color/amarelo</item>
+        <item>@color/vermelho</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_tarefa_selected">
+
+    <View
+        android:id="@+id/vwCorPrioridade"
+        android:layout_width="4dp"
+        android:layout_height="72dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/verde" />
+
+    <TextView
+        android:id="@+id/txvTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:text="Tarefa 1"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txvDataVencimento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvTitulo"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:fontFamily="sans-serif"
+        android:gravity="left"
+        android:text="20/10/2015"
+        android:textColor="@color/secondaryText"
+        android:textSize="14sp" />
+
+</RelativeLayout>
