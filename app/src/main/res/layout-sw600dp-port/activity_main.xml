@@ -24,7 +24,7 @@
             android:choiceMode="singleChoice"
             android:clickable="true"
             android:divider="@color/branco"
-             />
+            />
 
         <TextView
             android:id="@+id/empty_list"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/lista_vazia"
+            android:text="Landscape"
             android:textColor="@color/secondaryText"
             android:textSize="20sp" />
 
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_margin="@dimen/margin_right"
+            android:layout_margin="16dp"
             android:src="@drawable/ic_action_add"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorPrimaryPressed"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/branco"
-        android:elevation="@dimen/elevation_default"
+        android:elevation="4dp"
         android:visibility="gone"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/Theme.AppCompat.Light"

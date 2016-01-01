@@ -1,97 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/branco">
+    android:background="@color/branco"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+    <RelativeLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_default">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <View
+            android:id="@+id/view_align"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/listPreferredItemHeight"
+            android:layout_below="@+id/toolbar"
+            android:background="@color/colorPrimary"
+            android:elevation="@dimen/elevation_default" />
+    </RelativeLayout>
+
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fabTarefa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_action_add"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/padding_default"
-        android:layout_marginTop="@dimen/margin_top_floating_button_land"
         fab:fab_colorNormal="@color/colorAccent"
         fab:fab_colorPressed="@color/colorPrimaryPressed"
         fab:fab_colorRipple="@color/colorAccent"
-        />
+        android:layout_marginTop="100dp"
+        android:layout_alignRight="@+id/layout_center"
+        android:layout_marginRight="@dimen/margin_right"/>
 
-    <LinearLayout
+    <!-- Usado para criar duas colunas no nosso RelativeLayout -->
+    <android.support.v4.widget.Space
+        android:id="@+id/layout_center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true" />
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_below="@+id/toolbar"
-        android:id="@+id/linearLayout"
-        android:baselineAligned="false"
-        android:elevation="4dp">
+        android:layout_alignRight="@+id/layout_center"
+        android:layout_below="@+id/appBar">
+
+        <ListView
+            android:id="@+id/lstTarefas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:clickable="true"
+            android:divider="@color/branco" />
+
+        <TextView
+            android:id="@+id/empty_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/lista_vazia"
+            android:textColor="@color/secondaryText"
+            android:textSize="20sp" />
+
+    </FrameLayout>
+
+
+    <!-- Usado para determinar as margens para o cardview -->
+    <android.support.v4.widget.Space
+        android:id="@+id/cardviewAligner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignLeft="@id/layout_center"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignStart="@id/layout_center"
+        android:layout_marginEnd="@dimen/list_item_extra_padding"
+        android:layout_marginRight="@dimen/list_item_extra_padding"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:elevation="@dimen/elevation_default" />
+
+    <!-- CardView -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/container_tarefa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@id/cardviewAligner"
+        android:layout_alignLeft="@id/cardviewAligner"
+        android:layout_alignRight="@id/cardviewAligner"
+        android:layout_alignTop="@id/cardviewAligner"
+        android:layout_marginBottom="@dimen/abc_list_item_padding_horizontal_material"
+        android:layout_marginEnd="@dimen/abc_list_item_padding_horizontal_material"
+        android:layout_marginRight="@dimen/abc_list_item_padding_horizontal_material"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardCornerRadius="@dimen/corner_card"
+        app:cardPreventCornerOverlap="false" />
+
+    <!-- Toolbar bottom -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/layout_center"
+        android:background="@color/branco"
+        android:divider="@color/dividerColor"
+        android:elevation="@dimen/elevation_default"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:visibility="gone"
+        app:popupTheme="@style/Theme.AppCompat.Light">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:baselineAligned="false">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <include
-                android:id="@+id/toolbar_list_item"
-                layout="@layout/toolbar"
-                />
-
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="8dp" />
+                android:layout_height="wrap_content">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ListView
-                    android:id="@+id/lstTarefas"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:choiceMode="singleChoice"
-                    android:clickable="true"
-                    android:divider="@color/branco"/>
-
-                <TextView
-                    android:id="@+id/empty_list"
-                    android:layout_width="wrap_content"
+                <ImageButton
+                    android:id="@+id/btnPronto"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/lista_vazia"
-                    android:textColor="@color/secondaryText"
-                    android:textSize="20sp" />
+                    android:layout_weight="1"
+                    android:background="@drawable/ripple_custom"
+                    android:clickable="true"
+                    android:src="@drawable/ic_done" />
 
-
-            </FrameLayout>
-
-
+                <ImageButton
+                    android:id="@+id/btnEditar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/padding_default"
+                    android:layout_weight="1"
+                    android:background="@drawable/ripple_custom"
+                    android:clickable="true"
+                    android:src="@drawable/ic_action_edit" />
+            </LinearLayout>
         </LinearLayout>
 
-       <LinearLayout
-           android:layout_width="0dp"
-           android:layout_height="match_parent"
-           android:layout_weight="1"
-           android:orientation="vertical"
-           android:baselineAligned="false">
-           <include
-               android:id="@+id/toolbar_detail_item"
-               layout="@layout/toolbar"/>
-           <FrameLayout
-               android:id="@+id/tarefa_detalhe"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"/>
+    </android.support.v7.widget.Toolbar>
 
-       </LinearLayout>
-
-
-    </LinearLayout>
 </RelativeLayout>

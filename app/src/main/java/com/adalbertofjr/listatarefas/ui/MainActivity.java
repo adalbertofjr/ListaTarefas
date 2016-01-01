@@ -51,11 +51,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mTarefasList = (ListView) findViewById(R.id.lstTarefas);
         this.mTarefasList.setSelector(R.drawable.item_tarefa_selected);
 
-        if (!isTablet()) {
-            mFabTarefa = (FloatingActionButton) findViewById(R.id.fabTarefa);
-            mFabTarefa.setOnClickListener(this);
-            mFabTarefa.attachToListView(mTarefasList);
-        }
+
+        mFabTarefa = (FloatingActionButton) findViewById(R.id.fabTarefa);
+        mFabTarefa.setOnClickListener(this);
+        mFabTarefa.attachToListView(mTarefasList);
 
         // Eventos
         mTarefasList.setOnItemClickListener(this);
@@ -82,14 +81,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void iniciarToolbarBottom() {
-        if(!isTablet()){
-            mToolbarBottom = (Toolbar) findViewById(R.id.toolbar_bottom);
-            mBotaoPronto = (ImageButton) findViewById(R.id.btnPronto);
-            mBotaoEditar = (ImageButton) findViewById(R.id.btnEditar);
-            mBotaoPronto.setOnClickListener(this);
-            mBotaoEditar.setOnClickListener(this);
-        }
-
+        mToolbarBottom = (Toolbar) findViewById(R.id.toolbar_bottom);
+        mBotaoPronto = (ImageButton) findViewById(R.id.btnPronto);
+        mBotaoEditar = (ImageButton) findViewById(R.id.btnEditar);
+        mBotaoPronto.setOnClickListener(this);
+        mBotaoEditar.setOnClickListener(this);
     }
 
     @Override
@@ -100,11 +96,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(mTarefaSelecionada != null && mTarefaSelecionada.getId() == mTarefas.get(position).getId()){
+        if (mTarefaSelecionada != null && mTarefaSelecionada.getId() == mTarefas.get(position).getId()) {
             mTarefaSelecionada = null;
             view.setSelected(false);
             showToolbarBottom(false);
-        }else{
+        } else {
             mTarefaSelecionada = mTarefas.get(position);
             showToolbarBottom(true);
         }
@@ -141,20 +137,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private boolean isTablet() {
-        return findViewById(R.id.tarefa_detalhe) != null;
+        return findViewById(R.id.container_tarefa) != null;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showToolbarBottom(boolean show) {
-       if(!isTablet()){
-           if (show) {
-               mFabTarefa.hide();
-               mToolbarBottom.setVisibility(View.VISIBLE);
-           } else {
-               mToolbarBottom.setVisibility(View.INVISIBLE);
-               mFabTarefa.show();
-           }
-       }
+        if (show) {
+            mFabTarefa.hide();
+            mToolbarBottom.setVisibility(View.VISIBLE);
+        } else {
+            mToolbarBottom.setVisibility(View.INVISIBLE);
+            mFabTarefa.show();
+        }
     }
 
     private List<Tarefas> buscarTarefas() {

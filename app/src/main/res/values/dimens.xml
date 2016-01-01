@@ -4,4 +4,9 @@
     <dimen name="padding_default">16dp</dimen>
     <dimen name="margin_top_floating_button_land">100dp</dimen>
     <dimen name="elevation_default">4dp</dimen>
+    <dimen name="list_icon">40dp</dimen>
+    <dimen name="list_item_extra_padding">0dp</dimen>
+    <dimen name="margin_right">16dp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="corner_card">2dp</dimen>
 </resources>
