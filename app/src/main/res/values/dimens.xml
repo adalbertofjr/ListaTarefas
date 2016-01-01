@@ -2,4 +2,6 @@
 <resources>
     <dimen name="padding_detail_left">72dp</dimen>
     <dimen name="padding_default">16dp</dimen>
+    <dimen name="margin_top_floating_button_land">100dp</dimen>
+    <dimen name="elevation_default">4dp</dimen>
 </resources>

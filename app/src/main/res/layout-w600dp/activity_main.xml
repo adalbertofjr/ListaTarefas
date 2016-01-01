@@ -1,96 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/branco"
-    >
+    android:background="@color/branco">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <FrameLayout
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fabTarefa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_add"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/padding_default"
+        android:layout_marginTop="@dimen/margin_top_floating_button_land"
+        fab:fab_colorNormal="@color/colorAccent"
+        fab:fab_colorPressed="@color/colorPrimaryPressed"
+        fab:fab_colorRipple="@color/colorAccent"
+        />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
-
-        <ListView
-            android:id="@+id/lstTarefas"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:choiceMode="singleChoice"
-            android:clickable="true"
-            android:divider="@color/branco"
-            />
-
-        <TextView
-            android:id="@+id/empty_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/lista_vazia"
-            android:textColor="@color/secondaryText"
-            android:textSize="20sp" />
-
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/fabTarefa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_action_add"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorPrimaryPressed"
-            fab:fab_colorRipple="@color/colorAccent" />
-    </FrameLayout>
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/branco"
-        android:elevation="4dp"
-        android:visibility="gone"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/Theme.AppCompat.Light"
-        android:divider="@color/dividerColor">
+        android:orientation="horizontal"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/linearLayout"
+        android:baselineAligned="false"
+        android:elevation="4dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:baselineAligned="false">
 
+            <include
+                android:id="@+id/toolbar_list_item"
+                layout="@layout/toolbar"
+                />
 
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="8dp" />
 
-                <ImageButton
-                    android:id="@+id/btnPronto"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_done"
-                    android:clickable="true"
-                    android:background="@drawable/ripple_custom"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <ImageButton
-                    android:id="@+id/btnEditar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="@dimen/padding_default"
-                    android:src="@drawable/ic_action_edit"
+                <ListView
+                    android:id="@+id/lstTarefas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:choiceMode="singleChoice"
                     android:clickable="true"
-                    android:background="@drawable/ripple_custom"/>
-            </LinearLayout>
+                    android:divider="@color/branco"/>
+
+                <TextView
+                    android:id="@+id/empty_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/lista_vazia"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="20sp" />
+
+
+            </FrameLayout>
+
+
         </LinearLayout>
 
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="1"
+           android:orientation="vertical"
+           android:baselineAligned="false">
+           <include
+               android:id="@+id/toolbar_detail_item"
+               layout="@layout/toolbar"/>
+           <FrameLayout
+               android:id="@+id/tarefa_detalhe"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"/>
 
-    </android.support.v7.widget.Toolbar>
+       </LinearLayout>
+
+
+    </LinearLayout>
 </RelativeLayout>

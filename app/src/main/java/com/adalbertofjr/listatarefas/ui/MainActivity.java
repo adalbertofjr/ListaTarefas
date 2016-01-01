@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mTarefasList = (ListView) findViewById(R.id.lstTarefas);
         this.mTarefasList.setSelector(R.drawable.item_tarefa_selected);
 
-        //if (!isTablet()) {
+        if (!isTablet()) {
             mFabTarefa = (FloatingActionButton) findViewById(R.id.fabTarefa);
             mFabTarefa.setOnClickListener(this);
             mFabTarefa.attachToListView(mTarefasList);
-        //}
+        }
 
         // Eventos
         mTarefasList.setOnItemClickListener(this);
@@ -82,11 +82,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void iniciarToolbarBottom() {
-        mToolbarBottom = (Toolbar) findViewById(R.id.toolbar_bottom);
-        mBotaoPronto = (ImageButton) findViewById(R.id.btnPronto);
-        mBotaoEditar = (ImageButton) findViewById(R.id.btnEditar);
-        mBotaoPronto.setOnClickListener(this);
-        mBotaoEditar.setOnClickListener(this);
+        if(!isTablet()){
+            mToolbarBottom = (Toolbar) findViewById(R.id.toolbar_bottom);
+            mBotaoPronto = (ImageButton) findViewById(R.id.btnPronto);
+            mBotaoEditar = (ImageButton) findViewById(R.id.btnEditar);
+            mBotaoPronto.setOnClickListener(this);
+            mBotaoEditar.setOnClickListener(this);
+        }
+
     }
 
     @Override
@@ -137,19 +140,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         showToolbarBottom(false);
     }
 
-  /*  private boolean isTablet() {
+    private boolean isTablet() {
         return findViewById(R.id.tarefa_detalhe) != null;
-    }*/
+    }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showToolbarBottom(boolean show) {
-        if (show) {
-            mFabTarefa.hide();
-            mToolbarBottom.setVisibility(View.VISIBLE);
-        } else {
-            mToolbarBottom.setVisibility(View.INVISIBLE);
-            mFabTarefa.show();
-        }
+       if(!isTablet()){
+           if (show) {
+               mFabTarefa.hide();
+               mToolbarBottom.setVisibility(View.VISIBLE);
+           } else {
+               mToolbarBottom.setVisibility(View.INVISIBLE);
+               mFabTarefa.show();
+           }
+       }
     }
 
     private List<Tarefas> buscarTarefas() {
