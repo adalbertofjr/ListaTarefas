@@ -30,7 +30,7 @@ import java.util.Calendar;
 public class TarefaFragment extends Fragment implements View.OnClickListener {
 
 
-    private static final String EXTRA_TAREFA = "tarefa";
+    public static final String EXTRA_TAREFA = "tarefa";
     public static final String TAG_DETALHE = "tag_detalhe";
     private Toolbar mToolbar;
     private Tarefas mTarefa;
@@ -47,13 +47,19 @@ public class TarefaFragment extends Fragment implements View.OnClickListener {
 
         TarefaFragment fragment = new TarefaFragment();
         fragment.setArguments(parametros);
+
         return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTarefa = (Tarefas) getArguments().getSerializable(EXTRA_TAREFA);
+
+        Bundle args = getArguments();
+        if (args != null){
+            mTarefa = (Tarefas) getArguments().getSerializable(EXTRA_TAREFA);
+        }
+
         setHasOptionsMenu(true);
     }
 
@@ -74,7 +80,7 @@ public class TarefaFragment extends Fragment implements View.OnClickListener {
         }
 
         mDataVencimento.setOnClickListener(this);
-        mFabPronto.setOnClickListener(this);
+        if (mFabPronto != null) mFabPronto.setOnClickListener(this);
 
         return layout;
     }
@@ -128,17 +134,12 @@ public class TarefaFragment extends Fragment implements View.OnClickListener {
 
 
     private boolean verificarDados(){
-
         if(TextUtils.isEmpty(mTitulo.getText())){
             mTitulo.setError("Tarefa vazia");
             return false;
         }
-
-
         return true;
     }
-
-
 
     /**
      * Para seleciona Data Prioridade
@@ -169,6 +170,5 @@ public class TarefaFragment extends Fragment implements View.OnClickListener {
             btnDataVencimento.setText(day + "/" + (month + 1) + "/" + year);
         }
     }
-
 
 }

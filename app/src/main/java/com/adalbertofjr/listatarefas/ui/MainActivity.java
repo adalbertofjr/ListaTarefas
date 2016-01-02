@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,6 +20,8 @@ import com.adalbertofjr.listatarefas.R;
 import com.adalbertofjr.listatarefas.adapter.TarefaListAdapter;
 import com.adalbertofjr.listatarefas.dao.TarefasDAO;
 import com.adalbertofjr.listatarefas.dominio.Tarefas;
+import com.adalbertofjr.listatarefas.ui.fragments.TarefaFragment;
+import com.adalbertofjr.listatarefas.ui.fragments.TarefaViewFragment;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
@@ -29,6 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String TAREFAFRAGMENT_TAG = "TFTAG";
 
     private Toolbar mToolbar;
     private ListView mTarefasList;
@@ -54,7 +58,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         mFabTarefa = (FloatingActionButton) findViewById(R.id.fabTarefa);
         mFabTarefa.setOnClickListener(this);
-        mFabTarefa.attachToListView(mTarefasList);
+
+        if (!isTablet()) {
+            mFabTarefa.attachToListView(mTarefasList);
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container_tarefa, new TarefaViewFragment(), TAREFAFRAGMENT_TAG)
+                    .commit();
+        }
 
         // Eventos
         mTarefasList.setOnItemClickListener(this);
@@ -102,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             showToolbarBottom(false);
         } else {
             mTarefaSelecionada = mTarefas.get(position);
+            if (isTablet()) visualizarTarefa();
             showToolbarBottom(true);
         }
     }
@@ -128,6 +140,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
+    private void visualizarTarefa() {
+        Fragment tarefaFragment = new TarefaViewFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable(TarefaFragment.EXTRA_TAREFA, mTarefaSelecionada);
+        tarefaFragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_tarefa, tarefaFragment, TAREFAFRAGMENT_TAG)
+                .commit();
+    }
+
     private void encerrarTarefa() {
         mTarefaSelecionada.setEncerrado(1);
         new TarefasDAO(this).salvar(mTarefaSelecionada);
@@ -140,14 +164,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return findViewById(R.id.container_tarefa) != null;
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    //@TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showToolbarBottom(boolean show) {
         if (show) {
-            mFabTarefa.hide();
+            if (!isTablet()) mFabTarefa.hide();
             mToolbarBottom.setVisibility(View.VISIBLE);
         } else {
             mToolbarBottom.setVisibility(View.INVISIBLE);
-            mFabTarefa.show();
+            if (!isTablet()) mFabTarefa.show();
         }
     }
 
