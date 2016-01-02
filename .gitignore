@@ -47,3 +47,5 @@ Temporary Items
 .apdisk
 .idea
 .gradle
+.gradle/2.4/taskArtifacts/cache.properties.lock
+
