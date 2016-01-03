@@ -12,6 +12,7 @@
     <string name="sem_comentario">Sem Comentário</string>
     <string name="selecionar_data">Selecione a Data</string>
     <string name="lista_vazia">Nenhuma Tarefa Adicionada</string>
+    <string name="selecione_tarefa">Selecione uma tarefa</string>
 
     <string-array name="prioridade">
         <item>1</item>

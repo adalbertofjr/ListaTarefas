@@ -1,20 +1,15 @@
 package com.adalbertofjr.listatarefas.ui;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.adalbertofjr.listatarefas.R;
 import com.adalbertofjr.listatarefas.adapter.TarefaListAdapter;
@@ -53,11 +48,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         iniciarToolbarBottom();
 
         mTarefasList = (ListView) findViewById(R.id.lstTarefas);
-        this.mTarefasList.setSelector(R.drawable.item_tarefa_selected);
-
+        mTarefasList.setSelector(R.drawable.item_tarefa_selected);
 
         mFabTarefa = (FloatingActionButton) findViewById(R.id.fabTarefa);
-        mFabTarefa.setOnClickListener(this);
 
         if (!isTablet()) {
             mFabTarefa.attachToListView(mTarefasList);
@@ -69,7 +62,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // Eventos
         mTarefasList.setOnItemClickListener(this);
+        mFabTarefa.setOnClickListener(this);
     }
+
 
     @Override
     protected void onResume() {
@@ -78,18 +73,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         showToolbarBottom(false);
     }
 
+
     private void carregarListaTarefas() {
         mTarefas = buscarTarefas();
         mAdapter = new TarefaListAdapter(this, mTarefas);
         mTarefasList.setAdapter(mAdapter);
         mTarefasList.setEmptyView(findViewById(R.id.empty_list));
+        setPrimeiraTarefa();
     }
+
+
+    /**
+     * Indica primeira tarefa ao iniciar o aplicativo.
+     */
+    private void setPrimeiraTarefa() {
+        if(mTarefaSelecionada == null){
+            mTarefasList.setItemChecked(0, true);
+            mTarefaSelecionada = (Tarefas) mAdapter.getItem(0);
+            visualizarTarefa(mTarefaSelecionada);
+        }
+    }
+
 
     private void iniciarToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.titulo_activity_main);
     }
+
 
     private void iniciarToolbarBottom() {
         mToolbarBottom = (Toolbar) findViewById(R.id.toolbar_bottom);
@@ -99,24 +110,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mBotaoEditar.setOnClickListener(this);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (mTarefaSelecionada != null && mTarefaSelecionada.getId() == mTarefas.get(position).getId()) {
             mTarefaSelecionada = null;
+            mTarefasList.setItemChecked(position, false);
             view.setSelected(false);
             showToolbarBottom(false);
+            visualizarTarefa(null);
         } else {
             mTarefaSelecionada = mTarefas.get(position);
-            if (isTablet()) visualizarTarefa();
+            visualizarTarefa(mTarefaSelecionada);
             showToolbarBottom(true);
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -134,23 +150,32 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+
     private void editarTarefa() {
         Intent intent = new Intent(this, TarefaActivity.class);
         intent.putExtra(TarefaActivity.EXTRA_TAREFA, mTarefaSelecionada);
         startActivity(intent);
     }
 
-    private void visualizarTarefa() {
-        Fragment tarefaFragment = new TarefaViewFragment();
 
-        Bundle args = new Bundle();
-        args.putSerializable(TarefaFragment.EXTRA_TAREFA, mTarefaSelecionada);
-        tarefaFragment.setArguments(args);
+    /**
+     * Mostra os dados da tarefa selecionada no fragment tarefa_container
+     * nos dispositivos tablets.
+     */
+    private void visualizarTarefa(Tarefas tarefa) {
+        if (isTablet()) {
+            Fragment tarefaFragment = new TarefaViewFragment();
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_tarefa, tarefaFragment, TAREFAFRAGMENT_TAG)
-                .commit();
+            Bundle args = new Bundle();
+            args.putSerializable(TarefaFragment.EXTRA_TAREFA, tarefa);
+            tarefaFragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container_tarefa, tarefaFragment, TAREFAFRAGMENT_TAG)
+                    .commit();
+        }
     }
+
 
     private void encerrarTarefa() {
         mTarefaSelecionada.setEncerrado(1);
@@ -160,9 +185,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         showToolbarBottom(false);
     }
 
+
     private boolean isTablet() {
         return findViewById(R.id.container_tarefa) != null;
     }
+
 
     //@TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showToolbarBottom(boolean show) {
@@ -175,8 +202,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+
     private List<Tarefas> buscarTarefas() {
         String filtro = "encerrado == 0";
         return new TarefasDAO(this).buscarTarefas(filtro);
     }
+
 }

@@ -4,9 +4,8 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/branco"
-    >
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
@@ -23,8 +22,7 @@
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
             android:clickable="true"
-            android:divider="@color/branco"
-             />
+            android:divider="@color/branco" />
 
         <TextView
             android:id="@+id/empty_list"
@@ -46,6 +44,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorPrimaryPressed"
             fab:fab_colorRipple="@color/colorAccent" />
+
     </FrameLayout>
 
     <android.support.v7.widget.Toolbar
@@ -54,11 +53,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/branco"
+        android:divider="@color/dividerColor"
         android:elevation="@dimen/elevation_default"
-        android:visibility="gone"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/Theme.AppCompat.Light"
-        android:divider="@color/dividerColor">
+        android:visibility="gone"
+        app:popupTheme="@style/Theme.AppCompat.Light">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,22 +74,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_done"
+                    android:background="@drawable/ripple_custom"
                     android:clickable="true"
-                    android:background="@drawable/ripple_custom"/>
+                    android:src="@drawable/ic_done" />
 
                 <ImageButton
                     android:id="@+id/btnEditar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginRight="@dimen/padding_default"
-                    android:src="@drawable/ic_action_edit"
+                    android:layout_weight="1"
+                    android:background="@drawable/ripple_custom"
                     android:clickable="true"
-                    android:background="@drawable/ripple_custom"/>
+                    android:src="@drawable/ic_action_edit" />
             </LinearLayout>
         </LinearLayout>
 
-
     </android.support.v7.widget.Toolbar>
+
 </RelativeLayout>
