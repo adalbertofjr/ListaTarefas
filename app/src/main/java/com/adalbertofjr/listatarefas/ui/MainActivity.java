@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final String TAREFAFRAGMENT_TAG = "TFTAG";
+    private static final String STATE_ESTADO = "estado";
 
     private Toolbar mToolbar;
     private ListView mTarefasList;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ImageButton mBotaoPronto;
     private ImageButton mBotaoEditar;
     private Tarefas mTarefaSelecionada = null;
+    private int mStatePosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         mTarefasList = (ListView) findViewById(R.id.lstTarefas);
         mTarefasList.setSelector(R.drawable.item_tarefa_selected);
-
         mFabTarefa = (FloatingActionButton) findViewById(R.id.fabTarefa);
+
 
         if (!isTablet()) {
             mFabTarefa.attachToListView(mTarefasList);
@@ -58,6 +60,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container_tarefa, new TarefaViewFragment(), TAREFAFRAGMENT_TAG)
                     .commit();
+        }
+
+        carregarListaTarefas();
+
+        if(savedInstanceState != null){
+            mStatePosition = savedInstanceState.getInt(STATE_ESTADO);
+            setTarefaSelecionada(mStatePosition);
         }
 
         // Eventos
@@ -74,22 +83,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_ESTADO, mStatePosition);
+    }
+
+
     private void carregarListaTarefas() {
         mTarefas = buscarTarefas();
         mAdapter = new TarefaListAdapter(this, mTarefas);
         mTarefasList.setAdapter(mAdapter);
         mTarefasList.setEmptyView(findViewById(R.id.empty_list));
-        setPrimeiraTarefa();
+        setTarefaSelecionada(mStatePosition);
     }
 
 
-    /**
-     * Indica primeira tarefa ao iniciar o aplicativo.
-     */
-    private void setPrimeiraTarefa() {
-        if(mTarefaSelecionada == null){
-            mTarefasList.setItemChecked(0, true);
-            mTarefaSelecionada = (Tarefas) mAdapter.getItem(0);
+
+    private void setTarefaSelecionada(int position) {
+        if (position < 0) {
+            Tarefas tarefa = (Tarefas) mAdapter.getItem(0);
+            visualizarTarefa(tarefa);
+        }else{
+            mTarefasList.setItemChecked(position, true);
+            mTarefaSelecionada = (Tarefas) mAdapter.getItem(position);
+            showToolbarBottom(true);
             visualizarTarefa(mTarefaSelecionada);
         }
     }
@@ -123,11 +141,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (mTarefaSelecionada != null && mTarefaSelecionada.getId() == mTarefas.get(position).getId()) {
             mTarefaSelecionada = null;
             mTarefasList.setItemChecked(position, false);
+            mStatePosition = -1;
             view.setSelected(false);
             showToolbarBottom(false);
             visualizarTarefa(null);
         } else {
             mTarefaSelecionada = mTarefas.get(position);
+            mStatePosition = position;
             visualizarTarefa(mTarefaSelecionada);
             showToolbarBottom(true);
         }
@@ -183,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mAdapter.remove(mTarefaSelecionada);
         mAdapter.notifyDataSetChanged();
         showToolbarBottom(false);
+        setTarefaSelecionada(mStatePosition);
     }
 
 
@@ -207,5 +228,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String filtro = "encerrado == 0";
         return new TarefasDAO(this).buscarTarefas(filtro);
     }
+
 
 }
