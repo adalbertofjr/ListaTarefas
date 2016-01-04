@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         carregarListaTarefas();
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             mStatePosition = savedInstanceState.getInt(STATE_ESTADO);
             setTarefaSelecionada(mStatePosition);
         }
@@ -99,16 +99,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
     private void setTarefaSelecionada(int position) {
-        if (position < 0) {
-            Tarefas tarefa = (Tarefas) mAdapter.getItem(0);
-            visualizarTarefa(tarefa);
-        }else{
-            mTarefasList.setItemChecked(position, true);
-            mTarefaSelecionada = (Tarefas) mAdapter.getItem(position);
-            showToolbarBottom(true);
-            visualizarTarefa(mTarefaSelecionada);
+        if (mAdapter.getCount() > 0) {
+            if (position < 0) {
+                Tarefas tarefa = (Tarefas) mAdapter.getItem(0);
+                visualizarTarefa(tarefa);
+            } else {
+                mTarefasList.setItemChecked(position, true);
+                mTarefaSelecionada = (Tarefas) mAdapter.getItem(position);
+                showToolbarBottom(true);
+                visualizarTarefa(mTarefaSelecionada);
+            }
         }
     }
 
